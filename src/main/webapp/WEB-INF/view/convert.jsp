@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -14,7 +15,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
 <body style="background-color: black; color: white;">
 
 	<div class="container mt-5" align="center">
@@ -22,11 +22,13 @@
 		<hr>
 		<div class="col-md-6" align="left">
 			<!-- Create a form using Spring form tag library and Bootstrap classes -->
-			<form:form action="convert" method="POST" modelAttribute="convertForm"
-				class="form-group">
+			<form:form action="convert" method="POST"
+				modelAttribute="convertForm" class="form-group">
 				<!-- Input field for temperature with Bootstrap styling -->
 				<label for="temperature">Temperature:</label>
 				<form:input path="temperature" class="form-control" />
+				<i><form:errors path="temperature" cssClass="error"
+						style="color:red" /></i>
 				<br>
 				<!-- Dropdown for selecting conversion type with Bootstrap styling -->
 				<label for="tempUnit">Choose conversion:</label>
@@ -39,8 +41,24 @@
 				<!-- Submit button with Bootstrap styling -->
 				<button type="submit" class="btn btn-primary btn-block mt-3">Convert</button>
 			</form:form>
+			<!-- Checking if there are any binding errors -->
+			<c:if test="${bindingResult.hasErrors()}">
+				<div>
+					<!-- Looping through each error -->
+					<c:forEach items="${bindingResult.allErrors}" var="error">
+						<!-- Displaying the error message -->
+                        ${error.defaultMessage}<br />
+					</c:forEach>
+				</div>
+			</c:if>
+			<!-- Displaying the result of the conversion -->
+			<p class="mt-3">
+				<b>Result: </b> ${convertForm.temperature}${convertForm.fromUnit} is
+				equal to ${convertForm.result}${convertForm.toUnit}.
+			</p>
 		</div>
 	</div>
-</body></body>
+</body>
+</body>
 
 </html>
