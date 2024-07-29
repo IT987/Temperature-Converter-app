@@ -1,0 +1,17 @@
+# Ignore build artifacts
+target/
+*.jar
+
+# Ignore OS-specific files
+*.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# Ignore log files
+*.log
